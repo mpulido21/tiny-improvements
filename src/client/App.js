@@ -3,29 +3,37 @@ import { Col, Container, Row, Button, Card, CardBody, Form, FormGroup, Input, La
 import VoteForm from "./Component/VoteForm";
 import AwardCard from "./Component/AwardCard";
 import KudosForm from "./Component/KudosForm/KudosForm";
+import axios from "axios";
+// import PetCard from "./Component/PetCard";
 
 class App extends Component {
 
   constructor() {
     super();
     this.state = {
-      users: [
+      pets: [
         {
-          userId: 45089,
-          name: "Owen",
-          position: "Captian of the Breakroom"
+          name: 'Memphis',
+          age: 12,
+          type: 'Dog'
         },
         {
-          userId: 223,
-          name: "Brooke",
-          position: "Winner of All Dance-Offs"
+          name: 'Baby',
+          age: 11,
+          type: 'Panther'
         },
         {
-          userId: 6582,
-          name: "Gobi",
-          position: "King of Mid-Day Naps1"
+          name: 'Peach',
+          age: 3,
+          type: 'Cat'
+        },
+        {
+          name: 'Opal',
+          age: 1,
+          type: 'Kitten'
         }
       ],
+      users: [],
       restaurants: [
         {
           name: 'Maialino',
@@ -90,7 +98,7 @@ class App extends Component {
             <VoteForm />
           </Col>
           <Col md="12" lg="9">
-            {this.state.awards.map(award => <AwardCard />)}
+            {this.state.awards.map(award => <AwardCard title={award} />)}
           </Col>
         </Row >
         <br />
@@ -115,6 +123,28 @@ class App extends Component {
         {/* {
           this.state.users.map(user => <NameCard name={user.name} age={user.userId} />)
         } */}
+        {/* {
+          this.state.pets.map(pet => <PetCard name={pet.name} age={pet.age} />)
+        } */}
+
+        {
+          this.state.friends.map((friend, index) => <p key={index}> {friend.name} </p>)
+        }
+
+        axios.post("/api/awards", {
+          id: '4',
+      title: 'Loudest Easter Award',
+      comment: 'Who chews carrots like that at work??'
+        }).then(response => {
+          this.setState({
+            awards: response.data
+          })
+        })
+
+ <Row><Col md="12">
+          <Button onClick={this.postKudo}> click me </Button>
+        </Col></Row>
+
       </Container>
     );
   }
